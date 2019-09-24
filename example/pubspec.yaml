@@ -39,3 +39,9 @@ flutter:
           weight: 700
         - asset: fonts/Roboto/Roboto-Black.ttf
           weight: 900
+
+dependency_overrides:
+  sky_engine:
+    path: /home/sw/projects/flutter/engine/src/out/linux_debug_unopt_x64/gen/dart-pkg/sky_engine
+  sky_services:
+    path: /home/sw/projects/flutter/engine/src/out/linux_debug_unopt_x64/gen/dart-pkg/sky_services
