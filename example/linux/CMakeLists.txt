@@ -20,8 +20,13 @@ find_package(PkgConfig)
 pkg_search_module(EGL egl REQUIRED)
 pkg_search_module(GLES glesv2 REQUIRED)
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if (CMAKE_VERSION VERSION_LESS "3.8.2")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+else()
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+  set(CMAKE_CXX_EXTENSIONS OFF)
+endif()
 
 set(SOURCES main.cc)
 
