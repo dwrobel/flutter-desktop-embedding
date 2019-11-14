@@ -95,7 +95,7 @@ EXTRA_LDFLAGS+=$(shell pkg-config --libs $(SYSTEM_LIBRARIES))
 endif
 CXX=clang++ $(EXTRA_CXXFLAGS)
 CXXFLAGS.release=-DNDEBUG
-CXXFLAGS=-std=c++14 -Wall -Werror $(CXXFLAGS.$(BUILD))
+CXXFLAGS=-std=c++17 -Wall -Werror $(CXXFLAGS.$(BUILD))
 CPPFLAGS=$(patsubst %,-I%,$(INCLUDE_DIRS)) $(EXTRA_CPPFLAGS)
 LDFLAGS=-L$(BUNDLE_LIB_DIR) \
 	-l$(FLUTTER_LIB_NAME) \

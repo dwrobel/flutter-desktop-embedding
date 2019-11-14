@@ -11,6 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+#include <fstream>
 #include <flutter/flutter_window_controller.h>
 #include <linux/limits.h>
 #include <unistd.h>
@@ -54,6 +56,23 @@ int main(int argc, char **argv) {
   std::string data_directory = base_directory + "/data";
   std::string assets_path = data_directory + "/flutter_assets";
   std::string icu_data_path = data_directory + "/icudtl.dat";
+
+  do {
+    if (std::ifstream(icu_data_path)) {
+      std::cout << "Using: " << icu_data_path << std::endl;
+      break;
+    }
+
+    icu_data_path = "/usr/share/flutter/icudtl.dat";
+
+    if (std::ifstream(icu_data_path)) {
+      std::cout << "Using: " << icu_data_path << std::endl;
+      break;
+    }
+
+    std::cerr << "Unnable to locate icudtl.dat file" << std::endl;
+    return EXIT_FAILURE;
+  } while(0);
 
   // Arguments for the Flutter Engine.
   std::vector<std::string> arguments;
