@@ -19,6 +19,8 @@ find_package(PkgConfig)
 
 pkg_search_module(EGL egl REQUIRED)
 pkg_search_module(GLES glesv2 REQUIRED)
+pkg_search_module(GLIB glib-2.0 REQUIRED)
+pkg_search_module(GTK gtk+-3.0 REQUIRED)
 
 if (CMAKE_VERSION VERSION_LESS "3.8.2")
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
@@ -56,10 +58,10 @@ find_library(FLUTTER_LINUX_GLFW_LIBRARY NAMES "flutter_linux_glfw" PATHS "${CMAK
 message(STATUS "FLUTTER_LINUX_GLFW_LIBRARY: ${FLUTTER_LINUX_GLFW_LIBRARY}")
 get_filename_component(FLUTTER_LINUX_GLFW_LIBRARY_DIRS ${FLUTTER_LINUX_GLFW_LIBRARY} DIRECTORY)
 
-link_directories(${FLUTTER_LINUX_GLFW_LIBRARY_DIRS} ${EGL_LIBRARY_DIRS} ${GLES_LIBRARY_DIRS})
+link_directories(${FLUTTER_LINUX_GLFW_LIBRARY_DIRS} ${EGL_LIBRARY_DIRS} ${GLES_LIBRARY_DIRS} ${GLIB_LIBRARY_DIRS} ${GTK_LIBRARY_DIRS})
 
 add_executable(flutter-launcher ${SOURCES})
-target_include_directories(flutter-launcher PRIVATE ${FLUTTER_WRAPPER_INCLUDE_DIR} ${FLUTTER_EPHEMERAL_INCLUDE_DIR} ${EGL_INCLUDE_DIRS} ${GLES_INCLUDE_DIRS})
-target_link_libraries(flutter-launcher flutter_linux_glfw ${EGL_LIBRARIES} ${GLES_LIBRARIES})
+target_include_directories(flutter-launcher PRIVATE ${FLUTTER_WRAPPER_INCLUDE_DIR} ${FLUTTER_EPHEMERAL_INCLUDE_DIR} ${EGL_INCLUDE_DIRS} ${GLES_INCLUDE_DIRS} ${GLIB_INCLUDE_DIRS} ${GTK_INCLUDE_DIRS})
+target_link_libraries(flutter-launcher flutter_linux_glfw ${EGL_LIBRARIES} ${GLES_LIBRARIES} ${GLIB_LIBRARIES} ${GTK_LIBRARIES})
 
 install(TARGETS flutter-launcher DESTINATION bin)
