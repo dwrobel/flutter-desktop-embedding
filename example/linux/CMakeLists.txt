@@ -28,7 +28,7 @@ else()
   set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
 
-set(SOURCES main.cc)
+set(SOURCES main.cc utils.cc)
 
 # It support local and system-wide build version
 find_path(FLUTTER_WRAPPER_INCLUDE_DIR "flutter/flutter_window_controller.h"
