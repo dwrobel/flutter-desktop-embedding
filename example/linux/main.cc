@@ -114,9 +114,22 @@ int main(int argc, char **argv) {
   window_properties.width = 1920;
   window_properties.height = 1080;
 
+  std::string libapp_aot_path = asset_bundle_path + "/" + flutter::FlutterGetAppAotElfName(); // dw: TODO: There seems to be no convention name we could use, so let's temporary hardcode the path.
+
+  if (/* FlutterEngineRunsAOTCompiledDartCode() */ true) { // We don't want to pull in libflutter_engine.so in which FlutterEngineRunsAOTCompiledDartCode is located
+    FLWAY_LOG << "Using AOT precompiled runtime." << std::endl;
+
+    if (std::ifstream(libapp_aot_path)) {
+      FLWAY_LOG << "Using AOT snapshot: " << libapp_aot_path << std::endl;
+    } else {
+        FLWAY_ERROR << "Could not found AOT snapshot: " << libapp_aot_path << std::endl;
+        return EXIT_FAILURE;
+    }
+  }
+
   // Start the engine.
   if (!flutter_controller.CreateWindow(window_properties, asset_bundle_path,
-                                       arguments)) {
+                                       arguments, libapp_aot_path)) {
     return EXIT_FAILURE;
   }
   RegisterPlugins(&flutter_controller);
